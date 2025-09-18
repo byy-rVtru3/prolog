@@ -1,13 +1,9 @@
 % sol(-Solution)
-% Solution — список четверок вида Возраст-Имя-Смотритель-Страна
 
 sol(Solution) :-
-    % Возможные возраста, имена, смотрители и страны
     Names = [shamir, ofallo, quirrel, merah],
     Keepers = [eva, gracie, dolly, francine],
     Countries = [amb, ken, bas, tar],
-
-    % Формируем список четверок
     permutation([
         4-Name1-Keeper1-Country1,
         7-Name2-Keeper2-Country2,
@@ -15,11 +11,10 @@ sol(Solution) :-
         13-Name4-Keeper4-Country4
     ], Solution),
 
-    % Условие: все имена различны
     permutation(Names, [Name1,Name2,Name3,Name4]),
-    % Условие: все смотрители различны
+
     permutation(Keepers, [Keeper1,Keeper2,Keeper3,Keeper4]),
-    % Условие: все страны различны
+
     permutation(Countries, [Country1,Country2,Country3,Country4]),
 
     % Подсказка 1: Шамиру 7 лет
@@ -55,5 +50,5 @@ sol(Solution) :-
     member(AgeK-_-_-ken, Solution),
     member(AgeD-_-dolly-_, Solution),
     AgeK > AgeD,
-
-    !. % Чтобы был только один ответ
+    
+    !.
