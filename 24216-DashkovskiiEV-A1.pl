@@ -1,54 +1,39 @@
-% sol(-Solution)
-
 sol(Solution) :-
-    Names = [shamir, ofallo, quirrel, merah],
-    Keepers = [eva, gracie, dolly, francine],
-    Countries = [amb, ken, bas, tar],
-    permutation([
-        4-Name1-Keeper1-Country1,
-        7-Name2-Keeper2-Country2,
-        10-Name3-Keeper3-Country3,
-        13-Name4-Keeper4-Country4
-    ], Solution),
+    Solution = [
+        Age1-shamir-Keeper1-Country1,
+        Age2-ofallo-Keeper2-Country2,
+        Age3-quirrel-Keeper3-Country3,
+        Age4-merah-Keeper4-Country4
+    ],
 
-    permutation(Names, [Name1,Name2,Name3,Name4]),
+    permutation([7,4,10,13], [Age1, Age2, Age3, Age4]),
+    permutation([amb, ken, bas, tar], [Country1, Country2, Country3, Country4]),
+    permutation([eva, gracie, dolly, francine], [Keeper1, Keeper2, Keeper3, Keeper4]),
 
-    permutation(Keepers, [Keeper1,Keeper2,Keeper3,Keeper4]),
-
-    permutation(Countries, [Country1,Country2,Country3,Country4]),
-
-    % Подсказка 1: Шамиру 7 лет
+    % 1. Шамиру 7 лет
     member(7-shamir-_-_, Solution),
-
-    % Подсказка 2: Шамир прибыл из Амбалата
-    member(_-shamir-_-amb, Solution),
-
-    % Подсказка 3: Квиррел моложе, чем обезьяна из Таркхана
+    % 2. Шамир прибыл из Амбалата
+    member(7-shamir-_-amb, Solution),
+    % 3. Квиррел моложе, чем обезьяна, найденная в Таркхане
     member(AgeQ-quirrel-_-_, Solution),
     member(AgeT-_-_-tar, Solution),
     AgeQ < AgeT,
 
-    % Подсказка 4: из Офалло и из Таркхана:
-    % один под опекой Грейси, другому — 13 лет
-    member(AgeO-ofallo-KeeperO-_, Solution),
-    member(AgeT2-_-KeeperT2-tar, Solution),
-    (
-        (KeeperO = gracie, AgeT2 = 13);
-        (KeeperT2 = gracie, AgeO = 13)
+    % 4. Из Офалло и обезьяны, найденной в Таркхане, один находится под опекой Грейси, а другому — 13 лет
+    ( 
+        member(13-ofallo-_-_, Solution), member(_-NameTar-gracie-tar, Solution),
+        dif(NameTar, ofallo);
+        member(_ -ofallo-gracie-_, Solution), member(13-NameTar-_-tar, Solution),
+        dif(NameTar, ofallo)
     ),
 
-    % Подсказка 5: Животное из Амбалата —
-    % либо десятилетнее, либо то, за которым ухаживает Франсин
-    (member(10-_-_-amb, Solution);
-     member(_-_-francine-amb, Solution)),
+    % 5. Животное из Амбалата — либо десятилетнее, либо то, за которым ухаживает Франсин
+    (member(10-_-_-amb, Solution); member(_-_-francine-amb, Solution)),
 
-    % Подсказка 6: Офалло не десятилетний
-    \+ member(10-ofallo-_-_, Solution),
+    % 6. Офалло не десятилетний.
+    (member(AgeOf-ofallo-_-_, Solution), not(AgeOf = 10)),
 
-    % Подсказка 7: Обезьяна из Кендиси старше,
-    % чем та, за которой ухаживает Долли
+    % 7. Обезьяна из Кендиси старше, чем та, за которой ухаживает Долли
     member(AgeK-_-_-ken, Solution),
     member(AgeD-_-dolly-_, Solution),
-    AgeK > AgeD,
-    
-    !.
+    AgeK > AgeD.
