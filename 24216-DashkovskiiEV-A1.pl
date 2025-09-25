@@ -31,9 +31,9 @@ sol(Solution) :-
     % 4. Из Офалло и обезьяны, найденной в Таркхане, один находится под опекой Грейси, а другому — 13 лет
     ( 
         member(13-ofallo-_-_, Solution), member(_-NameTar-gracie-tar, Solution),
-        dif(NameTar, ofallo);
+        NameTar \= ofallo;
         member(_-ofallo-gracie-_, Solution), member(13-NameTar-_-tar, Solution),
-        dif(NameTar, ofallo)
+        NameTar \= ofallo
     ),
 
     % 5. Животное из Амбалата — либо десятилетнее, либо то, за которым ухаживает Франсин
