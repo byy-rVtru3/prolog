@@ -6,7 +6,7 @@ sol(Solution) :-
     member(Country3, [amb, ken, bas, tar]), member(Country4, [amb, ken, bas, tar]),
     Country1 \= Country2, Country1 \= Country3, Country1 \= Country4,
     Country2 \= Country3, Country2 \= Country4, Country3 \= Country4,
-
+    
     member(Keeper1, [eva, gracie, dolly, francine]), member(Keeper2, [eva, gracie, dolly, francine]),
     member(Keeper3, [eva, gracie, dolly, francine]), member(Keeper4, [eva, gracie, dolly, francine]),
     Keeper1 \= Keeper2, Keeper1 \= Keeper3, Keeper1 \= Keeper4,
@@ -31,9 +31,9 @@ sol(Solution) :-
     % 4. Из Офалло и обезьяны, найденной в Таркхане, один находится под опекой Грейси, а другому — 13 лет
     ( 
         member(13-ofallo-_-_, Solution), member(_-NameTar-gracie-tar, Solution),
-        NameTar \= ofallo;
+        dif(NameTar, ofallo);
         member(_-ofallo-gracie-_, Solution), member(13-NameTar-_-tar, Solution),
-        NameTar \= ofallo
+        dif(NameTar, ofallo)
     ),
 
     % 5. Животное из Амбалата — либо десятилетнее, либо то, за которым ухаживает Франсин
